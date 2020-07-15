@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split # To split data
 ___
 ## 3. Affichage des résultats
 ```python
-# We only show the first images of the X dataset, with the corresponding names
+# I only show the first images of the X dataset, with the corresponding names
 pylab.figure(figsize=(20,20))
 for i in range(15):
     pylab.subplot(5,5,i+1)
@@ -35,21 +35,124 @@ pylab.show()
 ![Bush and Powell](bush_powell.png)
 The labels of above images are : [1 1 1 1 1 1 1 1 1 0 0 0 1 0 1] (y=1) for George W Bush and (y=0) for Colin Powell
 ___
-## 4. Affichage des fonctions utilisés
-The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
+## 4. **KNN Algorithm Applications**
+* Preparation of datasets
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+```
+I have seperated the dataset randomly in two parts. The algorithm is trained with `X_train` and `y_train`. The algorithm is tested on `X_test` and `y_test`. The `test_size` variable is used to specify the wished data proportion.
+* First _KNN Algorithm_ with the `X_test`, `X_train` matrix and the `distance` function
+```python
+n_test = X_test.shape[0] # number of individuals in the test sample
+n_train = X_train.shape[0] # number of individuals in the train sample
+y_pred = np.zeros(n_test) # Initialization of the predictions vector
+t1=time()
+for i in range(n_test):
+    mini_index=0
+    for j in range(n_train):
+        if (distance(X_test[i,:],X_train[j,:])<distance(X_test[i,:],X_train[mini_index,:])):
+            mini_index=j
+    y_pred[i]=y_train[mini_index]
+t2=time()
+print(t2-t1)
+```
+Then the displays of the percentage of good classifications, the C. Powell and G.W Bush detection
+```python
+print('Percentage of good classifications :', 1-sum((y_pred-y_test)**2)/n_test)
+print('Percentage of C. Powel detected :', 1-sum(y_pred[y_test==0])/sum(y_test==0))
+print('Percentage of G. W. Bush detected :', sum(y_pred[y_test==1])/sum(y_test==1))
+```
+
+* Second application _**K nearest neighours algorithm**_  with the PCA values
+```python
+valtemp, Ptemp = eigh(P)
+valPropres = sort(valtemp)[::-1]
+indexsort = argsort(valtemp)[::-1]
+D=diag(valPropres)
+#print(D)
+```
+```python
+C_train = C[:,0:D.size]
+C_test = dot(normalise(X_test),P)[:,0:D.size]
+print(shape(C_train))
+print(shape(C_test))
+#print('Matrice C test \n', C_test,'Matrice C train \n' ,C_train)
+```
+```python
+nc_test= C_test.shape[0] # number of individuals in the test sample
+nc_train = C_train.shape[0] # number of individuals in the test sample
+yc_pred = zeros(nc_test) # Initialization of the predictions vector
+t1=time()
+for i in range(n_test):
+    mini_index=0
+    for j in range(nc_train):
+        if (distance(C_test[i,:],C_train[j,:])<distance(C_test[i,:],C_train[mini_index,:])):
+            mini_index=j
+    yc_pred[i]=y_train[mini_index]
+t2=time()
+print(t2-t1)
+```
+
+* `dissimilarite` function to measure the similirarities between `I1` and `I2` : 
+
+```python
+def dissimilarite(I1,I2):
+    return 1-corrcoef(I1,I2)[0,1]**2
+```
+
+* Third application of the _**KNN algorithm**_ with the `dissimilarite` function :
+
+```python
+nd_test = X_test.shape[0] # number of individuals in the nd test sample
+nd_train = X_train.shape[0] # number of individuals in the nd train sample
+y_diss_pred = zeros(nd_test) # Initialization of the predictions vector
+t1_diss=time()
+for i in range(nd_test):
+    mini_index_diss=0
+    for j in range(nd_train):
+        if (dissimilarite(X_test[i,:],X_train[j,:])<dissimilarite(X_test[i,:],X_train[mini_index,:])):
+            mini_index_diss=j
+    y_diss_pred[i]=y_train[mini_index_diss]
+t2_diss=time()
+print(t2_diss-t1_diss)
+```
+
+* Fourth application of the _**KNN algorithm**_ with the `dissimilarite` function and the PCA values
+
+```python
+nc_diss_test= C_test.shape[0] # nombre d'individus dans l'échantillon test
+nc_diss_train = C_train.shape[0] # nombre d'individus dans l'échantillon train
+yc_diss_pred = zeros(nc_test) # initialisation du vecteur des prédictions
+t1=time()
+for i in range(nc_diss_test):
+    mini_index=0
+    for j in range(nc_diss_train):
+        if (dissimilarite(C_test[i,:],C_train[j,:])<dissimilarite(C_test[i,:],C_train[mini_index,:])):
+            mini_index=j
+    yc_diss_pred[i]=y_train[mini_index]
+t2=time()
+print(t2-t1)
+```
+  
+___
+## 5. Used functions
+> The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
 ```python
 def distance(I1,I2):
     return sqrt(sum((I1-I2)**2))
 ```
+
+> The normalize function which takes a M matrix as an argument and returns a normalised matrix.
 
 ```python
 def normalise(M):
     n,p=M.shape
     N=zeros((n,p))
     for i in range(p):
-        N[:,i]=(M[:,i]-mean(M[:,i]))/std(M[:,i]) # We normalize each row
+        N[:,i]=(M[:,i]-mean(M[:,i]))/std(M[:,i]) # To normalize each row
     return N
 ```
+> The correlation function which takes a M matrix as an argument and return the correlation matrix associated to M.
 
 ```python
 def correlation(M):
@@ -57,7 +160,7 @@ def correlation(M):
     n=Z.shape[0]
     return 1/n*dot(Z.T,Z)
 ```
-
+> The ACP function which takes a M matrix as an argument and returns the eigenvalues, the eigenvectors and the P matrix.
 ```python
 def acp(M):
     n,p=M.shape
@@ -71,9 +174,3 @@ def acp(M):
     C=dot(normalise(M),P)
     return val, P, C
 ```
-```python
-def dissimilarite(I1,I2):
-    return 1-corrcoef(I1,I2)[0,1]**2
-```
-
-___ 
