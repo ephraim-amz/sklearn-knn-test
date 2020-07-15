@@ -33,9 +33,7 @@ for i in range(15):
 pylab.show()
 ```
 ![Bush and Powell](bush_powell.png)
-```python
-print(f'The labels of above images are : {y[0:15]} (y=1) for {names[1]} and (y=0) for {names[0]}')
-```
+The labels of above images are : [1 1 1 1 1 1 1 1 1 0 0 0 1 0 1] (y=1) for George W Bush and (y=0) for Colin Powell
 ___
 ## 4. Affichage des fonctions utilisés
 The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
@@ -49,7 +47,7 @@ def normalise(M):
     n,p=M.shape
     N=zeros((n,p))
     for i in range(p):
-        N[:,i]=(M[:,i]-mean(M[:,i]))/std(M[:,i])# on normalise chaque colonne
+        N[:,i]=(M[:,i]-mean(M[:,i]))/std(M[:,i]) # We normalize each row
     return N
 ```
 
@@ -64,9 +62,9 @@ def correlation(M):
 def acp(M):
     n,p=M.shape
     R= correlation(M)
-    valtemp, vectemp = eigh(R) # valeurs propres et vecteurs propres de la matrice de corrélation
-    val = sort(valtemp)[::-1] # valeurs propres par ordre décroissant
-    index = argsort(valtemp)[::-1] # indice du réarrangement des valeurs propres par ordre décroissant
+    valtemp, vectemp = eigh(R) # eigenvalues and eigenvectors of the correlation matrix
+    val = sort(valtemp)[::-1] # To sort eigenvalues by decreasing order
+    index = argsort(valtemp)[::-1] # Rearrangement index of eigenvalues by decreasing order
     P=zeros((p,p)) # matrice de changement de base ordonnée en fonction des valeurs propres
     for i in range(p):
         P[:,i]=vectemp[:,index[i]]
