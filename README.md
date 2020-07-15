@@ -53,7 +53,7 @@ for i in range(n_test):
 t2=time.time()
 print(f'The time execution of the KNN Algorithm with the X_test, X_train matrix and the distance function is : {t2-t1} seconds')
 ```
-> The time execution of the KNN Algorithm with the X_test, X_train matrix and the distance function is : 177.67414498329163 seconds
+> The time execution of the KNN Algorithm with the X_test, X_train matrix and the distance function is : 185.7907428741455 seconds
 
 Then the displays of the percentage of good classifications, the C. Powell and G.W Bush detection
 
@@ -62,9 +62,9 @@ print('Percentage of good classifications :', 1-sum((y_pred-y_test)**2)/n_test)
 print('Percentage of C. Powel detected :', 1-sum(y_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G. W. Bush detected :', sum(y_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.8130434782608695\
-Percentage of C. Powel detected : 0.7761194029850746\
-Percentage of G. W. Bush detected : 0.8282208588957055
+Percentage of good classifications : 0.8652173913043478\
+Percentage of C. Powel detected : 0.6987951807228916\
+Percentage of G. W. Bush detected : 0.9591836734693877
 
 * ## Second application _**K nearest neighours algorithm**_  with the PCA values
 ```python
@@ -95,15 +95,15 @@ for i in range(n_test):
 t2_nc=time.time()
 print(f'The time execution of the KNN Algorithm with the C_test, C_train matrix and the distance function is : {t2_nc-t1_nc} seconds')
 ```
-> The time execution of the KNN Algorithm with the C_test, C_train matrix and the distance function is : 138.803307056427 seconds
+> The time execution of the KNN Algorithm with the C_test, C_train matrix and the distance function is : 135.74484539031982 seconds
 ```python
 print('Percentage of good classifications :', 1-sum((yc_pred-y_test)**2)/nc_test)
 print('Percentage of C. Powell detected :', 1-sum(yc_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G.W Bush detected :', sum(yc_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.8434782608695652\
-Percentage of C. Powell detected : 0.8059701492537313\
-Percentage of G.W Bush detected : 0.8588957055214724
+Percentage of good classifications : 0.8652173913043478\
+Percentage of C. Powell detected : 0.7349397590361446\
+Percentage of G.W Bush detected : 0.9387755102040817
 
 * ### `dissimilarite` function to measure the similirarities between `I1` and `I2` : 
 
@@ -126,18 +126,18 @@ for i in range(nd_test):
             mini_index_diss=j
     y_diss_pred[i]=y_train[mini_index_diss]
 t2_diss=time.time()
-print(t2_diss-t1_diss)
+print(f'The time execution of the KNN Algorithm with the X_test, X_train matrix and the dissimilarite function is : {t2_diss-t1_diss} seconds.')
 ```
-> The time execution of the KNN Algorithm with the X_test, X_train matrix and the dissimilarite function is : 39.44298768043518 seconds
+> The time execution of the KNN Algorithm with the X_test, X_train matrix and the dissimilarite function is : 38.78929305076599 seconds.
 
 ```python
 print('Percentage of good classifications :', 1-sum((y_diss_pred-y_test)**2)/nd_test)
 print('Percentage of C. Powell detected :', 1-sum(y_diss_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G.W Bush detected :', sum(y_diss_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.7304347826086957\
-Percentage of C. Powell detected : 0.23880597014925375\
-Percentage of G.W Bush detected : 0.9325153374233128
+Percentage of good classifications : 0.5173913043478261\
+Percentage of C. Powell detected : 0.5783132530120482\
+Percentage of G.W Bush detected : 0.48299319727891155
 
 * ## Fourth application of the _**KNN algorithm**_ with the `dissimilarite` function and the PCA values
 
@@ -155,7 +155,17 @@ for i in range(nc_diss_test):
 t2_nc_diss=_nc_diss==time.time()
 print(f'The time execution of the KNN Algorithm with the C_test, C_train matrix and the dissimilarite function is : {t2_nc_diss-t1_nc_diss} seconds.')
 ```
-  > The time execution of the KNN Algorithm with the C_test, C_train matrix and the dissimilarite function is : 38.231664419174194 seconds.
+  > The time execution of the KNN Algorithm with the C_test, C_train matrix and the dissimilarite function is : 39.58890962600708 seconds.
+
+```python
+print('Percentage of good classifications :', 1-sum((yc_diss_pred-y_test)**2)/nc_diss_test)
+print('Percentage of C. Powell detected :', 1-sum(yc_diss_pred[y_test==0])/sum(y_test==0))
+print('Percentage of G.W Bush detected :', sum(yc_diss_pred[y_test==1])/sum(y_test==1))
+```
+Percentage of good classifications : 0.8217391304347826\
+Percentage of C. Powell detected : 0.6506024096385542\
+Percentage of G.W Bush detected : 0.9183673469387755
+
 ___
 ## 5. Used functions
 > The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
