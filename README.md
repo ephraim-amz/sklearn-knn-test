@@ -72,14 +72,12 @@ valtemp, Ptemp = eigh(P)
 valPropres = sort(valtemp)[::-1]
 indexsort = argsort(valtemp)[::-1]
 D=diag(valPropres)
-#print(D)
 ```
 ```python
 C_train = C[:,0:D.size]
 C_test = np.dot(normalise(X_test),P)[:,0:D.size]
 print(np.shape(C_train))
 print(np.shape(C_test))
-#print('C test matrix \n', C_test,'C train matrix \n' ,C_train)
 ```
 ```python
 nc_test= C_test.shape[0] # number of individuals in the test sample
