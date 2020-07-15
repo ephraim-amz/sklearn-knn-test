@@ -51,18 +51,19 @@ for i in range(n_test):
             mini_index=j
     y_pred[i]=y_train[mini_index]
 t2=time.time()
-print(t2-t1)
+print(f'The time execution of the KNN Algorithm with the X_test, X_train matrix and the distance function is : {t2-t1} seconds')
 ```
-> 179.2353413105011
+> The time execution of the KNN Algorithm with the X_test, X_train matrix and the distance function is : 177.67414498329163 seconds
 
 Then the displays of the percentage of good classifications, the C. Powell and G.W Bush detection
+
 ```python
 print('Percentage of good classifications :', 1-sum((y_pred-y_test)**2)/n_test)
 print('Percentage of C. Powel detected :', 1-sum(y_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G. W. Bush detected :', sum(y_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.8130434782608695
-Percentage of C. Powel detected : 0.7761194029850746
+Percentage of good classifications : 0.8130434782608695\
+Percentage of C. Powel detected : 0.7761194029850746\
 Percentage of G. W. Bush detected : 0.8282208588957055
 
 * ## Second application _**K nearest neighours algorithm**_  with the PCA values
@@ -84,24 +85,24 @@ print(np.shape(C_test))
 nc_test= C_test.shape[0] # number of individuals in the test sample
 nc_train = C_train.shape[0] # number of individuals in the test sample
 yc_pred = np.zeros(nc_test) # Initialization of the predictions vector
-t1=time.time()
+t1_nc=time.time()
 for i in range(n_test):
     mini_index=0
     for j in range(nc_train):
         if (distance(C_test[i,:],C_train[j,:])<distance(C_test[i,:],C_train[mini_index,:])):
             mini_index=j
     yc_pred[i]=y_train[mini_index]
-t2=time.time()
-print(t2-t1)
+t2_nc=time.time()
+print(f'The time execution of the KNN Algorithm with the C_test, C_train matrix and the distance function is : {t2_nc-t1_nc} seconds')
 ```
-> 138.803307056427
+> The time execution of the KNN Algorithm with the C_test, C_train matrix and the distance function is : 138.803307056427 seconds
 ```python
 print('Percentage of good classifications :', 1-sum((yc_pred-y_test)**2)/nc_test)
 print('Percentage of C. Powell detected :', 1-sum(yc_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G.W Bush detected :', sum(yc_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.8434782608695652
-Percentage of C. Powell detected : 0.8059701492537313
+Percentage of good classifications : 0.8434782608695652\
+Percentage of C. Powell detected : 0.8059701492537313\
 Percentage of G.W Bush detected : 0.8588957055214724
 
 * ### `dissimilarite` function to measure the similirarities between `I1` and `I2` : 
@@ -127,15 +128,15 @@ for i in range(nd_test):
 t2_diss=time.time()
 print(t2_diss-t1_diss)
 ```
-> 39.44298768043518
+> The time execution of the KNN Algorithm with the X_test, X_train matrix and the dissimilarite function is : 39.44298768043518 seconds
 
 ```python
 print('Percentage of good classifications :', 1-sum((y_diss_pred-y_test)**2)/nd_test)
 print('Percentage of C. Powell detected :', 1-sum(y_diss_pred[y_test==0])/sum(y_test==0))
 print('Percentage of G.W Bush detected :', sum(y_diss_pred[y_test==1])/sum(y_test==1))
 ```
-Percentage of good classifications : 0.7304347826086957
-Percentage of C. Powell detected : 0.23880597014925375
+Percentage of good classifications : 0.7304347826086957\
+Percentage of C. Powell detected : 0.23880597014925375\
 Percentage of G.W Bush detected : 0.9325153374233128
 
 * ## Fourth application of the _**KNN algorithm**_ with the `dissimilarite` function and the PCA values
@@ -152,15 +153,15 @@ for i in range(nc_diss_test):
             mini_index=j
     yc_diss_pred[i]=y_train[mini_index]
 t2_nc_diss=_nc_diss==time.time()
-print(t2_nc_diss-t1_nc_diss)
+print(f'The time execution of the KNN Algorithm with the C_test, C_train matrix and the dissimilarite function is : {t2_nc_diss-t1_nc_diss} seconds.')
 ```
-  > 38.231664419174194
+  > The time execution of the KNN Algorithm with the C_test, C_train matrix and the dissimilarite function is : 38.231664419174194 seconds.
 ___
 ## 5. Used functions
 > The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
 ```python
 def distance(I1,I2):
-    return sqrt(sum((I1-I2)**2))
+    return np.sqrt(sum((I1-I2)**2))
 ```
 
 > The normalize function which takes a M matrix as an argument and returns a normalised matrix.
@@ -168,9 +169,9 @@ def distance(I1,I2):
 ```python
 def normalise(M):
     n,p=M.shape
-    N=zeros((n,p))
+    N=np.zeros((n,p))
     for i in range(p):
-        N[:,i]=(M[:,i]-mean(M[:,i]))/std(M[:,i]) # To normalize each row
+        N[:,i]=(M[:,i]-np.mean(M[:,i]))/np.std(M[:,i])# To normalise each row
     return N
 ```
 > The correlation function which takes a M matrix as an argument and return the correlation matrix associated to M.
@@ -179,19 +180,19 @@ def normalise(M):
 def correlation(M):
     Z= normalise(M)
     n=Z.shape[0]
-    return 1/n*dot(Z.T,Z)
+    return 1/n*np.dot(Z.T,Z)
 ```
 > The ACP function which takes a M matrix as an argument and returns the eigenvalues, the eigenvectors and the P matrix.
 ```python
 def acp(M):
     n,p=M.shape
     R= correlation(M)
-    valtemp, vectemp = eigh(R) # eigenvalues and eigenvectors of the correlation matrix
-    val = sort(valtemp)[::-1] # To sort eigenvalues by decreasing order
-    index = argsort(valtemp)[::-1] # Rearrangement index of eigenvalues by decreasing order
-    P=zeros((p,p)) # eigenvalue ordered base change matrix
+    valtemp, vectemp = linalg.eigh(R) # valeurs propres et vecteurs propres de la matrice de corrélation
+    val = np.sort(valtemp)[::-1] # valeurs propres par ordre décroissant
+    index = np.argsort(valtemp)[::-1] # indice du réarrangement des valeurs propres par ordre décroissant
+    P=np.zeros((p,p)) # eigenvalue ordered base change matrix propres
     for i in range(p):
         P[:,i]=vectemp[:,index[i]]
-    C=dot(normalise(M),P)
+    C=np.dot(normalise(M),P)
     return val, P, C
 ```
