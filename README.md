@@ -229,3 +229,7 @@ def knnEfficiency(testedArray,algoType):
         print(f'The {i} element have a difference of {(testedArray[i]-testedArray[i+1])*100}% with the {i+1} element.')
     print(f'The 0 element have a difference of {(testedArray[0]-testedArray[len(testedArray)-1])*100}% with the {len(testedArray)} element.')
 ```
+``` python
+print(f'The fatest algorithm is the {knnType[np.argmin(timesArray)]} and the slowest algorithm is the {knnType[np.argmax(timesArray)]}')
+```
+The fatest algorithm is the 'KNN Algorithm with the dissimilarite function and the PCA values' and the slowest algorithm is the 'KNN Algorithm with the X_test and X_train matrix and the distance function'
