@@ -164,6 +164,21 @@ Percentage of good classifications : 0.8217391304347826\
 Percentage of C. Powell detected : 0.6506024096385542\
 Percentage of G.W Bush detected : 0.9183673469387755
 
+## Efficiency differences between of the KNN Algorithm
+
+* Example with the good classifications
+
+The efficiency of the 'KNN Algorithm with the X_test and X_train matrix and the distance function' is : 82.17391304347827%.\
+The efficiency of the 'KNN Algorithm with the PCA values and distance function' is : 84.78260869565217%.\
+The efficiency of the 'KNN Algorithm with the X_test and X_train and the dissimilarite function' is : 40.0%.\
+The efficiency of the 'KNN Algorithm with the dissimilarite function and the PCA values' is : 80.43478260869566%.
+
+The algorithm is the most efficient with the 'KNN Algorithm with the PCA values and distance function'.
+
+The 0 element have a difference of -2.608695652173909% with the 1 element.\
+The 1 element have a difference of 44.78260869565217% with the 2 element.\
+The 2 element have a difference of -40.43478260869565% with the 3 element.\
+The 0 element have a difference of 1.7391304347826098% with the 4 element.
 ___
 ## 5. Used functions
 > The `distance` function take 2 images (as vectors) and return the euclidian distance between these 2 images.
@@ -203,4 +218,14 @@ def acp(M):
         P[:,i]=vectemp[:,index[i]]
     C=np.dot(normalise(M),P)
     return val, P, C
+```
+> The knnEfficiency takes an array which contains the percentage efficiency and an array of KNN algo types and prints the efficiency infos.
+``` python
+def knnEfficiency(testedArray,algoType):
+    for i in range(len(testedArray)):
+        print(f'The efficiency of the {algoType[i]} is : {testedArray[i]*100}%.')
+    print(f'\n The algorithm is the most efficient with the {algoType[np.argmax(testedArray)]}.\n')
+    for i in range(len(testedArray)-1):
+        print(f'The {i} element have a difference of {(testedArray[i]-testedArray[i+1])*100}% with the {i+1} element.')
+    print(f'The 0 element have a difference of {(testedArray[0]-testedArray[len(testedArray)-1])*100}% with the {len(testedArray)} element.')
 ```
