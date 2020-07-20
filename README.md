@@ -29,7 +29,7 @@ for i in range(15):
     pylab.title(names[y[i]])
 pylab.show()
 ```
-![Bush and Powell](bush_powell.png)
+![Bush and Powell](knn_notebook_files/knn_notebook_8_0.png)
 The labels of above images are : [1 1 1 1 1 1 1 1 1 0 0 0 1 0 1] (y=1) for George W Bush and (y=0) for Colin Powell
 ___
 ## 4. **KNN Algorithm** Applications
